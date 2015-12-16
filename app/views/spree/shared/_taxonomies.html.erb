@@ -1,6 +1,6 @@
 <% max_level = Spree::Config[:max_level_in_taxons_menu] || 1 %>
 
-<nav id="taxonomies" class="sidebar-item hidden-xs" data-hook>
+<nav id="taxonomies" class="sidebar-item" data-hook>
 
   <div id="taxonomies_wrap">
 
@@ -26,7 +26,24 @@
 
 <script type="text/javascript">
 
+  /**
+   * Checks if jQuery element $element is under the cursor. Uses mouse event
+   * object to do this.
+   */
+  function isUnderCursor($element, mouseEvent) {
+    var x = mouseEvent.clientX;
+    var y = mouseEvent.clientY;
+    elementMouseIsOver = document.elementFromPoint(x, y);
+    return $(elementMouseIsOver).parents().is(function() {
+      return $(this).is($element);
+    });
+  }
+
   $(function() {
+
+    function isPopoverEnabled() {
+      return $(window).width() >= 768;
+    }
 
     var activateOnHover = false; //<%= @taxonomies.any? { |x| x.root == @taxon } ? 'true' : 'false' %>;
     var $menu = $('#taxonomies_taxons_tree');
@@ -34,6 +51,9 @@
         activate: activateSubmenu,
         deactivate: deactivateSubmenu,
         exitMenu: function(menu, e) {
+          if (isUnderCursor($(".popover"), e)) {
+            return false;
+          }
 
           $menu.stop(true, false);
 
@@ -52,6 +72,9 @@
     });
 
     function activateSubmenuHelper($row, $submenu) {
+      if (!isPopoverEnabled()) {
+        return;
+      }
       $submenu.css({
         display: "block",
         left: $menu.outerWidth(),
