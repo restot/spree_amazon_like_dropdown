@@ -31,10 +31,8 @@ Spree::FrontendHelper.module_eval do
       else
         chevron = ''
       end
-
-      link = link_to("#{offset}#{taxon.name}#{chevron}".html_safe, seo_url(taxon), class: 'taxonomies-taxon-link') do 
-      "<span class='badge badge-light'>4</span>"
-      end
+      badge = '<span class="badge badge-light">4</span>'
+      link = link_to("#{offset}#{taxon.name} #{badge}#{chevron}".html_safe, seo_url(taxon), class: 'taxonomies-taxon-link') 
       "<li class=\"#{css_class} taxonomies-taxon\">#{link}#{popup_children}</li>"
 
     end
