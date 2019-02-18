@@ -5,7 +5,7 @@
   <div id="taxonomies_wrap">
 
     <% @taxonomies.each_with_index do |taxonomy, index|
-        cache [I18n.locale, taxonomy, max_level] do
+        cache [I18n.locale, taxonomy, max_level, @taxon] do
           if index == 0
             content = taxons_tree2(taxonomy.root, @taxon, max_level)
             unless content.empty?
