@@ -5,6 +5,7 @@ Spree::FrontendHelper.module_eval do
     taxons = root_taxon.children.map do |taxon|     
       desc = taxon.description.nil? || taxon.description.empty? ? '' : "<span class=\"taxonomies-subtaxon-description\">#{taxon.description}</span>"
       if ENV['http_BADGES'].nil?
+        puts "http_BADGES #{ENV['http_BADGES'].inspect}"
         badge = "<span class='badge badge-light'>#{Spree::Product.in_taxon(taxon).count}</span>"
         link = link_to("<span class=\"taxonomies-subtaxon-name\">#{taxon.name}</span> #{badge}#{desc}".html_safe, seo_url(taxon), class: 'taxonomies-subtaxon-link')
       else 
