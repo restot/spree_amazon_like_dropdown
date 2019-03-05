@@ -35,7 +35,7 @@ Spree::FrontendHelper.module_eval do
         chevron = ''
       end
        if ENV['http_BADGES'].nil?
-        badge = "<span class='badge badge-light'>#{Spree::Product.in_taxon(taxon).count}</span>"
+        badge = "<span class='badge badge-light'>#{Spree::Product.in_taxon(taxon).available.count}</span>"
         link = link_to("#{offset}#{taxon.name} #{badge}#{chevron}".html_safe, seo_url(taxon), class: 'taxonomies-taxon-link')
        else
          link = link_to("#{offset}#{taxon.name} #{chevron}".html_safe, seo_url(taxon), class: 'taxonomies-taxon-link')
